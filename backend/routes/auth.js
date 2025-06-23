@@ -1,17 +1,15 @@
 import express from "express";
-
-import authRoutes from "./auth.js";
-// import workspaceRoutes from "./workspace.js";
-// import projectRoutes from "./project.js";
-// import taskRoutes from "./task.js";
-// import userRoutes from "./user.js";
+import { loginSchema, registerSchema } from "../libs/validate-schema.js"
+import { loginUser, registerUser } from "../controllers/auth-controller.js";
 
 const router = express.Router();
 
-router.use("/auth", authRoutes);
-// router.use("/workspaces", workspaceRoutes);
-// router.use("/projects", projectRoutes);
-// router.use("/tasks", taskRoutes);
-// router.use("/users", userRoutes);
+router.post("/register", validateRequest({ body: registerSchema }),
+    registerUser
+);
 
-export default router;
+router.post("/login", validateRequest({ body: loginSchema }),
+    loginUser
+);
+
+export default router
