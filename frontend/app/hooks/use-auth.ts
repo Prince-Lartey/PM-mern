@@ -3,7 +3,7 @@ import { postData } from "~/lib/fetch-util";
 import type { SignupFormData } from "~/routes/auth/sign-up";
 
 export const useSignUpMutation = () => {
-  return useMutation({
-    mutationFn: (data: SignupFormData) => postData("/auth/register", data),
-  });
+    return useMutation({
+        mutationFn: (data: SignupFormData) => postData("/auth/register", data),
+    });
 };

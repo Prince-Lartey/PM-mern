@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer"
 
-const sendMail = async (options) => {
+const fromEmail = process.env.SMPT_MAIL
+
+const sendEmail = async (options) => {
     const transporter = nodemailer.createTransport({
         host: process.env.SMPT_HOST,
         port: process.env.SMPT_PORT,
@@ -12,7 +14,7 @@ const sendMail = async (options) => {
     });
 
     const mailOptions = {
-        from: process.env.SMPT_MAIL,
+        from: `TeamSync <${fromEmail}>`,
         to: options.email,
         subject: options.subject,
         html: options.html,
@@ -21,4 +23,4 @@ const sendMail = async (options) => {
     await transporter.sendMail(mailOptions);
 };
 
-export default sendMail
+export default sendEmail
