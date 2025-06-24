@@ -1,4 +1,5 @@
 import express from "express";
+import { validateRequest } from "zod-express-middleware";
 import { loginSchema, registerSchema } from "../libs/validate-schema.js"
 import { loginUser, registerUser } from "../controllers/auth-controller.js";
 
