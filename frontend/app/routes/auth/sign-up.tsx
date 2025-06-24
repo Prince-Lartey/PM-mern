@@ -2,18 +2,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router';
+import { toast } from 'sonner';
 import type { z } from 'zod';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
+import { useSignUpMutation } from '~/hooks/use-auth';
 import { signUpSchema } from '~/lib/schema';
 
 export type SignupFormData = z.infer<typeof signUpSchema>;
 
-const SignUp = () => {
-    const [isLoading, setIsLoading] = React.useState(false);
-    
+const SignUp = () => {    
     const form = useForm<SignupFormData>({
         resolver: zodResolver(signUpSchema),
         defaultValues: {
@@ -24,8 +24,21 @@ const SignUp = () => {
         },
     });
 
+    const { mutate, isPending } = useSignUpMutation()
+
     const handleOnSubmit = (values: SignupFormData) => {
-        console.log(values);
+        mutate(values, {
+            onSuccess: () => {
+                toast.success("Email Verification Required", { description: "Please check your email for a verification link. If you don't see it, please check your spam folder.",});
+                form.reset();
+                // navigate("/sign-in");
+            },
+            onError: (error: any) => {
+                const errorMessage = error.response?.data?.message || "An error occurred";
+                console.log(error);
+                toast.error(errorMessage);
+            },
+        });
     }
 
     return (
@@ -108,8 +121,8 @@ const SignUp = () => {
                             )}
                         />
 
-                        <Button type="submit" className="w-full" disabled={isLoading}>
-                            {isLoading ? "Signing up..." : "Sign up"}
+                        <Button type="submit" className="w-full" disabled={isPending}>
+                            {isPending ? "Signing up..." : "Sign up"}
                         </Button>
                     </form>
                 </FormProvider>
