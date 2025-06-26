@@ -3,11 +3,13 @@ import { ArrowLeft, CheckCircle, Loader2 } from 'lucide-react';
 import React, { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router';
+import { toast } from 'sonner';
 import type { z } from 'zod';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardHeader } from '~/components/ui/card';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
+import { useForgotPasswordMutation } from '~/hooks/use-auth';
 import { forgotPasswordSchema } from '~/lib/schema';
 
 type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
@@ -15,7 +17,7 @@ type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 const ForgotPassword = () => {
     const [isSuccess, setIsSuccess] = useState(false);
 
-    // const { mutate: forgotPassword, isPending } = useForgotPasswordMutation();
+    const { mutate: forgotPassword, isPending } = useForgotPasswordMutation();
 
     const form = useForm<ForgotPasswordFormData>({
         resolver: zodResolver(forgotPasswordSchema),
@@ -25,19 +27,30 @@ const ForgotPassword = () => {
     });
 
     const onSubmit = (data: ForgotPasswordFormData) => {
-
+        forgotPassword(data, {
+            onSuccess: () => {
+                setIsSuccess(true);
+            },
+            onError: (error: any) => {
+                const errorMessage = error.response?.data?.message;
+                console.log(error);
+                toast.error(errorMessage);
+            },
+        });
     }
 
     return (
         <div className="flex flex-col items-center justify-center h-screen">
             <div className="w-full max-w-md space-y-6">
-                <div className="flex flex-col items-center justify-center space-y-2">
-                    <h1 className="text-2xl font-bold">Forgot Password</h1>
-                    <p className="text-muted-foreground">
-                        Enter your email to reset your password
-                    </p>
-                </div>
-
+                {!isSuccess && (
+                    <div className="flex flex-col items-center justify-center space-y-2">
+                        <h1 className="text-2xl font-bold">Forgot Password</h1>
+                        <p className="text-muted-foreground">
+                            Enter your email to reset your password
+                        </p>
+                    </div>
+                )}
+                
                 <Card>
                     <CardHeader>
                         <Link to="/sign-in" className="flex items-center gap-2">
@@ -78,9 +91,9 @@ const ForgotPassword = () => {
                                         <Button
                                             type="submit"
                                             className="w-full"
-                                            disabled={isSuccess}
+                                            disabled={isPending}
                                         >
-                                            {isSuccess ? (
+                                            {isPending ? (
                                                 <Loader2 className="w-4 h-4 animate-spin" />
                                             ) : (
                                                 "Reset Password"

@@ -257,17 +257,24 @@ const resetPasswordRequest = async (req, res) => {
             expiresAt: new Date(Date.now() + 15 * 60 * 1000),
         });
 
+        // send email
         const resetPasswordLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetPasswordToken}`;
         const emailBody = `<p>Click <a href="${resetPasswordLink}">here</a> to reset your password</p>`;
-        const emailSubject = "Reset your password";
 
-        const isEmailSent = await sendEmail(email, emailSubject, emailBody);
+        await sendEmail(
+            {
+                email: user.email,
+                subject: "Reset your password",
+                html: emailBody,
+                isHtml: true,
+            }
+        );
 
-        if (!isEmailSent) {
-            return res.status(500).json({
-                message: "Failed to send reset password email",
-            });
-        }
+        // if (!isEmailSent) {
+        //     return res.status(500).json({
+        //         message: "Failed to send reset password email",
+        //     });
+        // }
 
         res.status(200).json({ message: "Reset password email sent" });
     } catch (error) {
