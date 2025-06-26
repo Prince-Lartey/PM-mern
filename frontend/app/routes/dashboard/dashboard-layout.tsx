@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Navigate, Outlet } from 'react-router';
 import Header from '~/components/layout/header';
+import { SidebarComponent } from '~/components/layout/siderbar-component';
 import { Loader } from '~/components/loader';
 import { useAuth } from '~/provider/auth-context';
 import type { Workspace } from '~/types';
@@ -24,7 +25,7 @@ const DashboardLayout = () => {
 
     return (
          <div className="flex h-screen w-full">
-            {/* <SidebarComponent currentWorkspace={currentWorkspace} /> */}
+            <SidebarComponent currentWorkspace={currentWorkspace} />
 
             <div className="flex flex-1 flex-col h-full">
                 <Header
