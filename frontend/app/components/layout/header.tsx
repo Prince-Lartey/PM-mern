@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router';
+import { Link, useLoaderData, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '~/provider/auth-context';
 import type { Workspace } from '~/types';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
@@ -18,6 +18,21 @@ const Header = ({ onWorkspaceSelected, selectedWorkspace, onCreateWorkspace }: H
     const navigate = useNavigate();
 
     const { user, logout } = useAuth();
+    const { workspaces } = useLoaderData() as { workspaces: Workspace[] };
+    const isOnWorkspacePage = useLocation().pathname.includes("/workspace");
+
+    const handleOnClick = (workspace: Workspace) => {
+        onWorkspaceSelected(workspace);
+        const location = window.location;
+
+        if (isOnWorkspacePage) {
+            navigate(`/workspaces/${workspace._id}`);
+        } else {
+            const basePath = location.pathname;
+
+            navigate(`${basePath}?workspaceId=${workspace._id}`);
+        }
+    };
 
     return (
         <div className="bg-background sticky top-0 z-40 border-b">
@@ -46,17 +61,14 @@ const Header = ({ onWorkspaceSelected, selectedWorkspace, onCreateWorkspace }: H
                         <DropdownMenuSeparator />
 
                         <DropdownMenuGroup>
-                            {/* {workspaces.map((ws) => (
-                                <DropdownMenuItem
-                                key={ws._id}
-                                onClick={() => handleOnClick(ws)}
-                                >
-                                {ws.color && (
-                                    <WorkspaceAvatar color={ws.color} name={ws.name} />
-                                )}
-                                <span className="ml-2">{ws.name}</span>
+                            {workspaces.map((ws) => (
+                                <DropdownMenuItem key={ws._id} onClick={() => handleOnClick(ws)}>
+                                    {ws.color && (
+                                        <WorkspaceAvatar color={ws.color} name={ws.name} />
+                                    )}
+                                    <span className="ml-2">{ws.name}</span>
                                 </DropdownMenuItem>
-                            ))} */}
+                            ))}
                         </DropdownMenuGroup>
 
                         <DropdownMenuGroup>
