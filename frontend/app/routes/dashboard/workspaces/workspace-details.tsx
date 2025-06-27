@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router';
 import { Loader } from '~/components/loader';
+import { ProjectList } from '~/components/workspace/project-list';
+import { WorkspaceHeader } from '~/components/workspace/workspace-header';
 import { useGetWorkspaceQuery } from '~/hooks/use-workspace';
 import type { Project, Workspace } from '~/types';
 
@@ -30,7 +32,20 @@ const WorkspaceDetails = () => {
     }
 
     return (
-        <div>WorkspaceDetails</div>
+        <div className="space-y-8">
+            <WorkspaceHeader
+                workspace={data.workspace}
+                members={data?.workspace?.members as any}
+                onCreateProject={() => setIsCreateProject(true)}
+                onInviteMember={() => setIsInviteMember(true)}
+            />
+
+            <ProjectList
+                workspaceId={workspaceId}
+                projects={data.projects}
+                onCreateProject={() => setIsCreateProject(true)}
+            />
+        </div>
     )
 }
 
