@@ -3,6 +3,7 @@ import { Navigate, Outlet } from 'react-router';
 import Header from '~/components/layout/header';
 import { SidebarComponent } from '~/components/layout/siderbar-component';
 import { Loader } from '~/components/loader';
+import CreateWorkspace from '~/components/workspace/create-workspace';
 import { useAuth } from '~/provider/auth-context';
 import type { Workspace } from '~/types';
 
@@ -40,6 +41,10 @@ const DashboardLayout = () => {
                     </div>
                 </main>
             </div>
+            <CreateWorkspace
+                isCreatingWorkspace={isCreatingWorkspace}
+                setIsCreatingWorkspace={setIsCreatingWorkspace}
+            />
         </div>
     )
 }
