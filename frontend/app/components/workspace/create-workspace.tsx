@@ -11,6 +11,7 @@ import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
 import { useCreateWorkspace } from '~/hooks/use-workspace';
 import { cn } from '~/lib/utils';
+import { toast } from 'sonner';
 
 interface CreateWorkspaceProps {
     isCreatingWorkspace: boolean;
@@ -30,9 +31,10 @@ export const colorOptions = [
 ];
 
 export type WorkspaceForm = z.infer<typeof workspaceSchema>;
-const { mutate, isPending } = useCreateWorkspace();
+
 
 const CreateWorkspace = ({ isCreatingWorkspace, setIsCreatingWorkspace }: CreateWorkspaceProps) => {
+
     const form = useForm<WorkspaceForm>({
         resolver: zodResolver(workspaceSchema),
         defaultValues: {
@@ -42,9 +44,22 @@ const CreateWorkspace = ({ isCreatingWorkspace, setIsCreatingWorkspace }: Create
         },
     });
     const navigate = useNavigate();
+    const { mutate, isPending } = useCreateWorkspace();
 
     const onSubmit = (data: WorkspaceForm) => {
-
+         mutate(data, {
+            onSuccess: (data: any) => {
+                form.reset();
+                setIsCreatingWorkspace(false);
+                toast.success("Workspace created successfully");
+                navigate(`/workspaces/${data._id}`);
+            },
+            onError: (error: any) => {
+                const errorMessage = error.response.data.message;
+                toast.error(errorMessage);
+                console.log(error);
+            },
+        });
     }
 
     return (
