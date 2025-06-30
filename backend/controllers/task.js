@@ -1,4 +1,5 @@
 import Project from "../models/project.js";
+import Task from "../models/task.js";
 import Workspace from "../models/workspace.js";
 
 const createTask = async (req, res) => {
