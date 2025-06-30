@@ -2,7 +2,7 @@ import express from "express";
 import authMiddleware from "../middleware/auth-middleware.js";
 import { validateRequest } from "zod-express-middleware";
 import { projectSchema } from "../libs/validate-schema.js";
-import { createProject, getProjectDetails } from "../controllers/project.js";
+import { createProject, getProjectDetails, getProjectTasks } from "../controllers/project.js";
 import { z } from "zod";
 
 const router = express.Router();
@@ -22,6 +22,11 @@ router.get( "/:projectId", authMiddleware,
         params: z.object({ projectId: z.string() }),
     }),
     getProjectDetails
+);
+
+router.get("/:projectId/tasks", authMiddleware,
+    validateRequest({ params: z.object({ projectId: z.string() }) }),
+    getProjectTasks
 );
 
 export default router;

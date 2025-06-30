@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router';
 import { BackButton } from '~/components/back-button';
 import { Loader } from '~/components/loader';
+import { CreateTaskDialog } from '~/components/task/create-task-dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
