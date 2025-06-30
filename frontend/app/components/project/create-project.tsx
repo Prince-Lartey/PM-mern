@@ -16,6 +16,8 @@ import { format } from 'date-fns';
 import { Calendar } from '../ui/calendar';
 import { Checkbox } from '../ui/checkbox';
 import { fa } from 'zod/v4/locales';
+import { UseCreateProject } from '~/hooks/use-project';
+import { toast } from 'sonner';
 
 interface CreateProjectDialogProps {
     isOpen: boolean;
@@ -27,8 +29,6 @@ interface CreateProjectDialogProps {
 export type CreateProjectFormData = z.infer<typeof projectSchema>;
 
 const CreateProjectDialog = ({ isOpen, onOpenChange, workspaceId, workspaceMembers }: CreateProjectDialogProps) => {
-    const isPending = false
-
     const form = useForm<CreateProjectFormData>({
         resolver: zodResolver(projectSchema),
         defaultValues: {
@@ -42,8 +42,29 @@ const CreateProjectDialog = ({ isOpen, onOpenChange, workspaceId, workspaceMembe
         },
     });
 
-    const onSubmit = (values: CreateProjectFormData) => {
+    const { mutate, isPending } = UseCreateProject();
 
+    const onSubmit = (values: CreateProjectFormData) => {
+        if (!workspaceId) return;
+
+        mutate(
+            {
+                projectData: values,
+                workspaceId,
+            },
+            {
+                onSuccess: () => {
+                    toast.success("Project created successfully");
+                    form.reset();
+                    onOpenChange(false);
+                },
+                onError: (error: any) => {
+                    const errorMessage = error.response.data.message;
+                    toast.error(errorMessage);
+                    console.log(error);
+                },
+            }
+        );
     }
 
     return (

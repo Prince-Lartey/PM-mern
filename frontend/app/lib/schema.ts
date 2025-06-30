@@ -40,13 +40,6 @@ export const projectSchema = z.object({
     status: z.nativeEnum(ProjectStatus),
     startDate: z.string().min(10, "Start date is required"),
     dueDate: z.string().min(10, "Due date is required"),
-    members: z
-        .array(
-            z.object({
-                user: z.string(),
-                role: z.enum(["manager", "contributor", "viewer"]),
-            })
-        )
-        .optional(),
+    members: z.array(z.object({ user: z.string(), role: z.enum(["manager", "contributor", "viewer"]), })).optional(),
     tags: z.string().optional(),
 });
