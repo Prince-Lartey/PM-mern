@@ -20,7 +20,7 @@ export const ProjectCard = ({ project, progress, workspaceId }: ProjectCardProps
                 <CardHeader>
                     <div className="flex items-center justify-between">
                         <CardTitle>{project.title}</CardTitle>
-                        <span className={cn( "text-xs rounded-full", getTaskStatusColor(project.status))}>
+                        <span className={cn( "text-xs rounded-full px-2 py-0.5", getTaskStatusColor(project.status))}>
                             {project.status}
                         </span>
                     </div>
