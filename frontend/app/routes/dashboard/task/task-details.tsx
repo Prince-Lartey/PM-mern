@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router';
 import { toast } from 'sonner';
 import { BackButton } from '~/components/back-button';
 import { Loader } from '~/components/loader';
+import { CommentSection } from '~/components/task/comment-section';
 import { SubTasksDetails } from '~/components/task/sub-tasks';
 import { TaskAssigneesSelector } from '~/components/task/task-assignees-selector';
 import { TaskDescription } from '~/components/task/task-description';
@@ -178,6 +179,8 @@ const TaskDetails = () => {
 
                         <SubTasksDetails subTasks={task.subtasks || []} taskId={task._id} />
                     </div>
+
+                    <CommentSection taskId={task._id} members={project.members as any} />
                 </div>
             </div>
         </div>
