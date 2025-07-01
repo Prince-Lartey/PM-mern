@@ -7,11 +7,13 @@ import { BackButton } from '~/components/back-button';
 import { Loader } from '~/components/loader';
 import { CommentSection } from '~/components/task/comment-section';
 import { SubTasksDetails } from '~/components/task/sub-tasks';
+import { TaskActivity } from '~/components/task/task-activity';
 import { TaskAssigneesSelector } from '~/components/task/task-assignees-selector';
 import { TaskDescription } from '~/components/task/task-description';
 import { TaskPrioritySelector } from '~/components/task/task-priority-selector';
 import { TaskStatusSelector } from '~/components/task/task-status-selector';
 import { TaskTitle } from '~/components/task/task-title';
+import { Watchers } from '~/components/task/watchers';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
 import { useTaskByIdQuery } from '~/hooks/use-task';
@@ -181,6 +183,12 @@ const TaskDetails = () => {
                     </div>
 
                     <CommentSection taskId={task._id} members={project.members as any} />
+                </div>
+
+                <div className="w-full">
+                    <Watchers watchers={task.watchers || []} />
+
+                    <TaskActivity resourceId={task._id} />
                 </div>
             </div>
         </div>
