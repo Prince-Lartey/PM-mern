@@ -3,7 +3,7 @@ import { taskSchema } from "../libs/validate-schema.js";
 import authMiddleware from "../middleware/auth-middleware.js";
 import { validateRequest } from "zod-express-middleware";
 import { z } from "zod";
-import { createTask } from "../controllers/task.js";
+import { createTask, getTaskById } from "../controllers/task.js";
 
 const router = express.Router();
 
@@ -15,6 +15,15 @@ router.post( "/:projectId/create-task", authMiddleware,
         body: taskSchema,
     }),
     createTask
+);
+
+router.get("/:taskId", authMiddleware,
+    validateRequest({
+        params: z.object({
+            taskId: z.string(),
+        }),
+    }),
+    getTaskById
 );
 
 export default router
