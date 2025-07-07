@@ -1,6 +1,9 @@
 import Project from "../models/project.js";
 import Task from "../models/task.js";
 import Workspace from "../models/workspace.js";
+import Comment from "../models/comment.js"
+import ActivityLog from "../models/activity.js";
+import { recordActivity } from "../libs/index.js";
 
 const createTask = async (req, res) => {
     try {
