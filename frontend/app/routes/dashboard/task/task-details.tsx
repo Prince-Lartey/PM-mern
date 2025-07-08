@@ -16,7 +16,7 @@ import { TaskTitle } from '~/components/task/task-title';
 import { Watchers } from '~/components/task/watchers';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
-import { useTaskByIdQuery } from '~/hooks/use-task';
+import { useAchievedTaskMutation, useTaskByIdQuery, useWatchTaskMutation } from '~/hooks/use-task';
 import { useAuth } from '~/provider/auth-context';
 import type { Project, Task } from '~/types';
 
@@ -30,8 +30,8 @@ const TaskDetails = () => {
         isLoading: boolean;
     };
 
-    // const { mutate: watchTask, isPending: isWatching } = useWatchTaskMutation();
-    // const { mutate: achievedTask, isPending: isAchieved } = useAchievedTaskMutation();
+    const { mutate: watchTask, isPending: isWatching } = useWatchTaskMutation();
+    const { mutate: achievedTask, isPending: isAchieved } = useAchievedTaskMutation();
 
     if (isLoading) {
         return (
@@ -58,19 +58,33 @@ const TaskDetails = () => {
 
     const members = task?.assignees || [];
 
-    // const handleWatchTask = () => {
-    //     watchTask(
-    //         { taskId: task._id },
-    //         {
-    //             onSuccess: () => {
-    //                 toast.success("Task watched");
-    //             },
-    //             onError: () => {
-    //                 toast.error("Failed to watch task");
-    //             },
-    //         }
-    //     );
-    // };
+    const handleWatchTask = () => {
+        watchTask(
+            { taskId: task._id },
+            {
+                onSuccess: () => {
+                    toast.success("Task watched");
+                },
+                onError: () => {
+                    toast.error("Failed to watch task");
+                },
+            }
+        );
+    };
+
+    const handleAchievedTask = () => {
+        achievedTask(
+            { taskId: task._id },
+            {
+                onSuccess: () => {
+                    toast.success("Task achieved");
+                },
+                onError: () => {
+                    toast.error("Failed to achieve task");
+                },
+            }
+        );
+    };
 
     return (
         <div className="container mx-auto p-0 py-4 md:px-4">
@@ -78,7 +92,7 @@ const TaskDetails = () => {
                 <div className="flex flex-col md:flex-row md:items-center">
                     <BackButton />
 
-                    <h1 className="text-xl md:text-2xl font-bold">{task.title}</h1>
+                    <h1 className="text-xl md:text-2xl font-bold capitalize">{task.title}</h1>
 
                     {task.isArchived && (
                         <Badge className="ml-2" variant={"outline"}>
@@ -91,9 +105,9 @@ const TaskDetails = () => {
                     <Button
                         variant={"outline"}
                         size="sm"
-                        // onClick={handleWatchTask}
+                        onClick={handleWatchTask}
                         className="w-fit"
-                        // disabled={isWatching}
+                        disabled={isWatching}
                     >
                         {isUserWatching ? (
                             <>
@@ -111,9 +125,9 @@ const TaskDetails = () => {
                     <Button
                         variant={"outline"}
                         size="sm"
-                        // onClick={handleAchievedTask}
+                        onClick={handleAchievedTask}
                         className="w-fit"
-                        // disabled={isAchieved}
+                        disabled={isAchieved}
                     >
                         {task.isArchived ? "Unarchive" : "Archive"}
                     </Button>

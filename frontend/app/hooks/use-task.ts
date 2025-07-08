@@ -56,58 +56,55 @@ export const useUpdateTaskStatusMutation = () => {
 };
 
 export const useUpdateTaskDescriptionMutation = () => {
-  const queryClient = useQueryClient();
+    const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: (data: { taskId: string; description: string }) =>
-      updateData(`/tasks/${data.taskId}/description`, {
-        description: data.description,
-      }),
-    onSuccess: (data: any) => {
-      queryClient.invalidateQueries({
-        queryKey: ["task", data._id],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["task-activity", data._id],
-      });
-    },
-  });
+    return useMutation({
+        mutationFn: (data: { taskId: string; description: string }) => updateData(`/tasks/${data.taskId}/description`, {
+            description: data.description,
+        }),
+        onSuccess: (data: any) => {
+            queryClient.invalidateQueries({
+                queryKey: ["task", data._id],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["task-activity", data._id],
+            });
+        },
+    });
 };
 
 export const useUpdateTaskAssigneesMutation = () => {
-  const queryClient = useQueryClient();
+    const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: (data: { taskId: string; assignees: string[] }) =>
-      updateData(`/tasks/${data.taskId}/assignees`, {
-        assignees: data.assignees,
-      }),
-    onSuccess: (data: any) => {
-      queryClient.invalidateQueries({
-        queryKey: ["task", data._id],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["task-activity", data._id],
-      });
-    },
-  });
+    return useMutation({
+        mutationFn: (data: { taskId: string; assignees: string[] }) => updateData(`/tasks/${data.taskId}/assignees`, {
+            assignees: data.assignees,
+        }),
+        onSuccess: (data: any) => {
+        queryClient.invalidateQueries({
+                queryKey: ["task", data._id],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["task-activity", data._id],
+            });
+        },
+    });
 };
 
 export const useUpdateTaskPriorityMutation = () => {
-  const queryClient = useQueryClient();
+    const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: (data: { taskId: string; priority: TaskPriority }) =>
-      updateData(`/tasks/${data.taskId}/priority`, { priority: data.priority }),
-    onSuccess: (data: any) => {
-      queryClient.invalidateQueries({
-        queryKey: ["task", data._id],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["task-activity", data._id],
-      });
-    },
-  });
+    return useMutation({
+        mutationFn: (data: { taskId: string; priority: TaskPriority }) => updateData(`/tasks/${data.taskId}/priority`, { priority: data.priority }),
+        onSuccess: (data: any) => {
+            queryClient.invalidateQueries({
+                queryKey: ["task", data._id],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["task-activity", data._id],
+            });
+        },
+    });
 };
 
 export const useAddSubTaskMutation = () => {

@@ -46,8 +46,8 @@ export const SubTasksDetails = ({ subTasks, taskId }: { subTasks: Subtask[]; tas
     };
 
     return (
-         <div className="mb-6">
-            <h3 className="text-sm font-medium text-muted-foreground mb-0">
+         <div className="my-6">
+            <h3 className="text-sm font-medium text-muted-foreground mb-1">
                 Sub Tasks
             </h3>
 
