@@ -75,7 +75,7 @@ const StatisticsCharts = ({stats, taskTrendsData, projectStatusData, taskPriorit
                                     dot={{ r: 4 }}
                                 />
 
-                                <ChartLegend content={<ChartLegendContent />} verticalAlign="top"/>
+                                <ChartLegend content={<ChartLegendContent />} />
                             </LineChart>
                         </ChartContainer>
                     </div>
