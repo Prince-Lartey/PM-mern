@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSearchParams } from 'react-router';
 import StatsCard from '~/components/dashboard/stat-card';
+import StatisticsCharts from '~/components/dashboard/statistics-charts';
 import { Loader } from '~/components/loader';
 import { useGetWorkspaceStatsQuery } from '~/hooks/use-workspace';
 import type { Project, ProjectStatusData, StatsCardProps, Task, TaskPriorityData, TaskTrendsData, WorkspaceProductivityData } from '~/types';
@@ -37,6 +38,19 @@ const Dashboard = () => {
             </div>
 
             <StatsCard data={data.stats} />
+
+            <StatisticsCharts
+                stats={data.stats}
+                taskTrendsData={data.taskTrendsData}
+                projectStatusData={data.projectStatusData}
+                taskPriorityData={data.taskPriorityData}
+                workspaceProductivityData={data.workspaceProductivityData}
+            />
+
+            {/* <div className="grid gap-6 lg:grid-cols-2">
+                <RecentProjects data={data.recentProjects} />
+                <UpcomingTasks data={data.upcomingTasks} />
+            </div> */}
         </div>
     )
 }
