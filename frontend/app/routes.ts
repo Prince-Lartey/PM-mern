@@ -17,6 +17,7 @@ export default [
         route("workspaces/:workspaceId/projects/:projectId","routes/dashboard/project/project-details.tsx"),
         route("workspaces/:workspaceId/projects/:projectId/tasks/:taskId", "routes/dashboard/task/task-details.tsx"),
         route("my-tasks", "routes/dashboard/my-tasks.tsx"),
+        route("members", "routes/dashboard/members.tsx"),
     ]),
 
 ] satisfies RouteConfig;
