@@ -238,7 +238,7 @@ const MyTasks = () => {
 
                             <CardContent className="p-3 space-y-3 max-h-[600px] overflow-y-auto">
                                 {todoTasks?.map((task) => (
-                                    <Card key={task._id} className="hover:shadow-md transition-shadow">
+                                    <Card key={task._id} className="hover:shadow-md transition-shadow px-2">
                                         <Link to={`/workspaces/${task.project.workspace}/projects/${task.project._id}/tasks/${task._id}`} className="block">
                                             <h3 className="font-medium">{task.title}</h3>
                                             <p className="text-sm text-muted-foreground line-clamp-3">
@@ -280,7 +280,7 @@ const MyTasks = () => {
                                 {inProgressTasks?.map((task) => (
                                     <Card
                                         key={task._id}
-                                        className="hover:shadow-md transition-shadow"
+                                        className="hover:shadow-md transition-shadow px-2"
                                     >
                                         <Link to={`/workspaces/${task.project.workspace}/projects/${task.project._id}/tasks/${task._id}`} className="block" >
                                             <h3 className="font-medium">{task.title}</h3>
@@ -329,7 +329,7 @@ const MyTasks = () => {
                                 {doneTasks?.map((task) => (
                                     <Card
                                         key={task._id}
-                                        className="hover:shadow-md transition-shadow"
+                                        className="hover:shadow-md transition-shadow px-2"
                                     >
                                         <Link
                                             to={`/workspaces/${task.project.workspace}/projects/${task.project._id}/tasks/${task._id}`}
