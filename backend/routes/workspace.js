@@ -2,7 +2,7 @@ import express from "express";
 import { validateRequest } from "zod-express-middleware";
 import { inviteMemberSchema, tokenSchema, workspaceSchema } from "../libs/validate-schema.js";
 import authMiddleware from "../middleware/auth-middleware.js";
-import { createWorkspace, getWorkspaceDetails, getWorkspaceProjects, getWorkspaces, getWorkspaceStats } from "../controllers/workspace.js";
+import { acceptGenerateInvite, acceptInviteByToken, createWorkspace, getWorkspaceDetails, getWorkspaceProjects, getWorkspaces, getWorkspaceStats, inviteUserToWorkspace } from "../controllers/workspace.js";
 
 const router = express.Router();
 

@@ -56,7 +56,7 @@ const registerUser = async (req, res) => {
         const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
         const emailBody = `<p>Click <a href="${verificationLink}">here</a> to verify your email</p>`;
 
-       await sendEmail(
+        await sendEmail(
             {
                 email: user.email,
                 subject: "Verify your email",
