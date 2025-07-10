@@ -396,7 +396,7 @@ const inviteUserToWorkspace = async (req, res) => {
 
         await sendEmail(
             {
-                email: user.email,
+                email: email,
                 subject: "You have been invited to join a workspace",
                 html: emailContent,
                 isHtml: true,
