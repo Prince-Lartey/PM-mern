@@ -1,6 +1,7 @@
 import { recordActivity } from "../libs/index.js";
 import sendEmail from "../libs/send-mail.js";
 import Project from "../models/project.js";
+import User from "../models/user.js";
 import WorkspaceInvite from "../models/workspace-invite.js";
 import Workspace from "../models/workspace.js";
 import jwt from "jsonwebtoken";

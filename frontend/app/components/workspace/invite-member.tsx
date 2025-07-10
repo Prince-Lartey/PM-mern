@@ -91,7 +91,7 @@ const InviteMemberDialog = ({ isOpen, onOpenChange, workspaceId}: InviteMemberDi
                     </TabsList>
 
                     <TabsContent value="email">
-                        <div className="grid gap-4">
+                        <div className="grid gap-4 mt-4">
                             <div className="grid gap-2">
                                 <FormProvider {...form}>
                                     <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -158,9 +158,9 @@ const InviteMemberDialog = ({ isOpen, onOpenChange, workspaceId}: InviteMemberDi
                     </TabsContent>
 
                     <TabsContent value="link">
-                        <div className="grid gap-4">
+                        <div className="grid gap-4 mt-4">
                             <div className="grid gap-2">
-                                <Label>Share this link to invite people</Label>
+                                <Label className='text-sm'>Share this link to invite people</Label>
                                 <div className="flex items-center space-x-2">
                                     <Input readOnly value={`${window.location.origin}/workspace-invite/${workspaceId}`}/>
                                     <Button onClick={handleCopyInviteLink} disabled={isPending}>
